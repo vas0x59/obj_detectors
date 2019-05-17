@@ -17,5 +17,9 @@ def draw_boxes(img, boxes, ids, confs, CLASSES):
         y = int(y)
         w = int(w)
         h = int(h)
-        cv2.rectangle(image_full, (x, y), (x + w, y + h), (0, 255, 150), 2)
+        color = (0, 255, 150)
+        cv2.rectangle(img, (x, y), (x + w, y + h), color, 2)
+        text = "{}: {:.4f}".format(CLASSES[ids[i]], confs[i])
+        cv2.putText(img, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX,
+                0.5, color, 2)
     return img

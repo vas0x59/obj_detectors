@@ -58,8 +58,9 @@ class YoloOpencvDetetor:
         bx = []
         cids = [] 
         confs = []
-        for i in idxs.flatten():
-            bx.append(boxes[i])
-            cids.append(classIDs[i])
-            confs.append(confidences[i])
+        if len(idxs) > 0:
+            for i in idxs.flatten():
+                bx.append(boxes[i])
+                cids.append(classIDs[i])
+                confs.append(confidences[i])
         return bx, cids, confs
