@@ -2,7 +2,7 @@ import numpy as np
 import time
 import cv2
 import os
-
+import time
 
 class YoloOpencvDetetor:
     def __init__(self, cfg, wh, CLASSESPath= "./coco.names"):
@@ -12,16 +12,21 @@ class YoloOpencvDetetor:
 
         # CLASSESPath = "./coco.names"
         self.CLASSES = open(CLASSESPath).read().strip().split("\n")
-        np.random.seed(42)
+        # np.random.seed(42)
+        self.COLORS = np.random.randint(0, 255, size=(len(self.CLASSES), 3),
+            dtype="uint8")
 
-    def detect(self, image, conf=0.3, thresh=0.3, s=(416, 416)):
+
+    def detect(self, image, conf=0.4, thresh=0.4, s=(320, 320)):
         (H, W) = image.shape[:2]
+        st_t = time.time()
         blob = cv2.dnn.blobFromImage(image, 1 / 255.0, s, #416 416
             swapRB=True, crop=False)
         self.net.setInput(blob)
         start = time.time()
         layerOutputs = self.net.forward(self.ln)
-
+        print("forward_t: ", time.time() - st_t)
+        st_t = time.time()
         boxes = []
         confidences = []
         classIDs = []
@@ -58,9 +63,12 @@ class YoloOpencvDetetor:
         bx = []
         cids = [] 
         confs = []
+        print("post_proc_t: ", time.time() - st_t)
+        st_t = time.time()
         if len(idxs) > 0:
             for i in idxs.flatten():
                 bx.append(boxes[i])
                 cids.append(classIDs[i])
                 confs.append(confidences[i])
+        print("sort_t: ", round(time.time() - st_t, 3))
         return bx, cids, confs
