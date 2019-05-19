@@ -4,7 +4,7 @@ import cv2
 import os
 import time
 
-class YoloOpencvDetetor:
+class SSDOpencvDetetor:
     def __init__(self, cfg, wh, CLASSESPath= "./coco.names"):
         self.net = cv2.dnn.readNetFromDarknet(cfg, wh) # "./yolov3-tiny.cfg" "./yolov3-tiny.weights"
         self.ln = self.net.getLayerNames()
