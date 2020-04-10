@@ -3,14 +3,14 @@
 
 import cv2
 import numpy as np 
-from Detectors.YoloOpencvDetector import YoloOpencvDetetor
+from Detectors.YoloOpencvDetector import YoloOpencvDetector
 from Detectors import Utils 
 import time
-# detector = YoloOpencvDetetor("./Detectors/YOLO/yolov3.cfg", "./Detectors/YOLO/yolov3_320.weights")
-# detector = YoloOpencvDetetor("./Detectors/YOLO/yolov3.cfg", "./Detectors/YOLO/yolov3.weights")
-# detector = YoloOpencvDetetor("./Detectors/YOLO/yolov3.cfg", "./Detectors/YOLO/yolov3.weights")
-# detector = YoloOpencvDetetor("./Detectors/YOLO/yolov2-voc.cfg", "./Detectors/YOLO/yolov2-voc.weights")
-detector = YoloOpencvDetetor("./Detectors/YOLO/signs/yolov3_cfg.cfg", "./Detectors/YOLO/signs/yolov3_cfg_8800.weights", CLASSESPath="./signs.names")
+# detector = YoloOpencvDetector("./Detectors/YOLO/yolov3.cfg", "./Detectors/YOLO/yolov3_320.weights")
+# detector = YoloOpencvDetector("./Detectors/YOLO/yolov3.cfg", "./Detectors/YOLO/yolov3.weights")
+# detector = YoloOpencvDetector("./Detectors/YOLO/yolov3.cfg", "./Detectors/YOLO/yolov3.weights")
+# detector = YoloOpencvDetector("./Detectors/YOLO/yolov2-voc.cfg", "./Detectors/YOLO/yolov2-voc.weights")
+detector = YoloOpencvDetector("./Detectors/YOLO/signs/yolov3_cfg.cfg", "./Detectors/YOLO/signs/yolov3_cfg_8800.weights", CLASSESPath="./signs.names")
 # cap = cv2.VideoCapture("/home/vasily/Downloads/DJI_0002.MP4")
 cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, int(640))
