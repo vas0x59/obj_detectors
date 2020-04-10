@@ -1,1 +1,1 @@
-# obj_datectors
+# obj_detectors
