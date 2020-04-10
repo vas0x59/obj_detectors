@@ -27,7 +27,7 @@ class YoloOpencvDetector:
         self.net.setInput(blob)
         # start = time.time()
         layerOutputs = self.net.forward(self.ln)
-        print("forward_t: ", 1 /(time.time() - st_t))
+        # print("forward_t: ", 1 /(time.time() - st_t))
         # st_t = time.time()
         boxes = []
         confidences = []
