@@ -1,29 +1,34 @@
+# import os
+# os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
 import cv2
 import numpy as np 
 from Detectors.YoloOpencvDetector import YoloOpencvDetetor
 from Detectors import Utils 
-
+import time
 # detector = YoloOpencvDetetor("./Detectors/YOLO/yolov3.cfg", "./Detectors/YOLO/yolov3_320.weights")
-detector = YoloOpencvDetetor("./Detectors/YOLO/yolov3.cfg", "./Detectors/YOLO/yolov3.weights")
-# detector = YoloOpencvDetetor("./Detectors/YOLO/yolov3_tiny.cfg", "./Detectors/YOLO/yolov3_tiny.weights")
+# detector = YoloOpencvDetetor("./Detectors/YOLO/yolov3.cfg", "./Detectors/YOLO/yolov3.weights")
+# detector = YoloOpencvDetetor("./Detectors/YOLO/yolov3.cfg", "./Detectors/YOLO/yolov3.weights")
 # detector = YoloOpencvDetetor("./Detectors/YOLO/yolov2-voc.cfg", "./Detectors/YOLO/yolov2-voc.weights")
-# detector = YoloOpencvDetetor("./Detectors/YOLO/yolov2-tiny.cfg", "./Detectors/YOLO/yolov2-tiny.weights")
+detector = YoloOpencvDetetor("./Detectors/YOLO/signs/yolov3_cfg.cfg", "./Detectors/YOLO/signs/yolov3_cfg_8800.weights", CLASSESPath="./signs.names")
 # cap = cv2.VideoCapture("/home/vasily/Downloads/DJI_0002.MP4")
 cap = cv2.VideoCapture(0)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, int(640))
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, int(480))
 # out = cv2.VideoWriter()
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
-out = cv2.VideoWriter('output_3.avi',fourcc, 20.0, (1920,1080))
+out = cv2.VideoWriter('output_3.avi',fourcc, 28.0, (640,480))
 frame_i = 0
-
+time.sleep(1)
 while True:
     ret, frame = cap.read()
     if ret == False:
         break
-    if frame_i % 5 == 0:
+    if 0 == 0:
         
-        # frame = cv2.resize(frame, (0, 0), fx=0.7, fy=0.7)
-        boxes, classIDs, confidences = detector.detect(frame, s=(160, 160))
+        # frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
         # boxes, classIDs, confidences = detector.detect(frame, s=(320, 320))
+        boxes, classIDs, confidences = detector.detect(frame, s=(320, 320))
         # boxes, classIDs, confidences = detector.detect(frame, s=(416, 416))
         # boxes, classIDs, confidences = detector.detect(frame, s=(608, 608))
         # boxes, classIDs, confidences = detector.detect(frame, s=(700, 700))

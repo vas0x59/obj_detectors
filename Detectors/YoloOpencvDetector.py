@@ -3,10 +3,12 @@ import time
 import cv2
 import os
 import time
-
+from numba import jit
 class YoloOpencvDetetor:
     def __init__(self, cfg, wh, CLASSESPath= "./coco.names"):
         self.net = cv2.dnn.readNetFromDarknet(cfg, wh) # "./yolov3-tiny.cfg" "./yolov3-tiny.weights"
+        self.net.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)
+        self.net.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
         self.ln = self.net.getLayerNames()
         self.ln = [self.ln[i[0] - 1] for i in self.net.getUnconnectedOutLayers()]
 
@@ -16,8 +18,8 @@ class YoloOpencvDetetor:
         self.COLORS = np.random.randint(0, 255, size=(len(self.CLASSES), 3),
             dtype="uint8")
 
-
-    def detect(self, image, conf=0.4, thresh=0.4, s=(320, 320)):
+    # @jit(nopython=False, parallel=True)
+    def detect(self, image, conf=0.3, thresh=0.3, s=(320, 320)):
         (H, W) = image.shape[:2]
         st_t = time.time()
         blob = cv2.dnn.blobFromImage(image, 1 / 255.0, s, #416 416
@@ -25,7 +27,7 @@ class YoloOpencvDetetor:
         self.net.setInput(blob)
         # start = time.time()
         layerOutputs = self.net.forward(self.ln)
-        print("forward_t: ", time.time() - st_t)
+        print("forward_t: ", 1 /(time.time() - st_t))
         # st_t = time.time()
         boxes = []
         confidences = []
